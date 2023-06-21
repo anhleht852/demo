@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+
+<head>
+<title>Shop Homepage - Start Bootstrap Template</title>
+</head>
+
+<body>
+	<div class="container-fluid" layout:fragment="content">
+		<!-- shopping-cart-area start -->
+		<div class="cart-main-area pb-90">
+			<div class="col-lg-12">
+				<div class="contact-info-wrapper">
+					<div class="contact-title">
+						<h4>CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ QUỐC KHANG AN</h4>
+					</div>
+					<div th:each = "ct : ${contact}" class="contact-info">
+						<div class="single-contact-info">
+							<div class="contact-info-icon">
+								<i class="ti-location-pin"></i>
+							</div>
+							<div class="contact-info-text">
+								<p>
+									<span>Địa chỉ:</span> <label th:text = "${ct.address}" ></label>
+								</p>
+							</div>
+						</div>
+						<div class="single-contact-info">
+							<div class="contact-info-icon">
+								<i class="pe-7s-mail"></i>
+							</div>
+							<div class="contact-info-text">
+								<p>
+									<span>Email: </span> <a th:href="${'mailto:' + ct.email}" th:text = "${ct.email}" ></a>
+								</p>
+							</div>
+						</div>
+						<div th:each = "tp : ${ct.telephone}" th:if = "${tp.hotLine == 'Y'}" class="single-contact-info">
+							<div class="contact-info-icon">
+								<i class="pe-7s-phone"></i>
+							</div>
+							<div class="contact-info-text">
+								<p>
+									<span>Điện thoại: </span> <a th:href="${'tel: ' + tp.phoneNumber}" th:text = "${tp.phoneNumber}" ></a>
+								</p>
+							</div>
+						</div>
+						
+						<div th:each = "tp : ${ct.telephone}" th:unless = "${tp.hotLine == 'Y'}" class="single-contact-info">
+							<div class="contact-info-icon">
+								<i class="pe-7s-call"></i>
+							</div>
+							<div class="contact-info-text">
+								<p>
+									<span>Fax: </span> <a th:href="${'tel: ' + tp.phoneNumber}" th:text = "${tp.phoneNumber}" ></a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-12">
+				<div class="contact-map-wrapper">
+					<div class="contact-map mb-40" th:utext ="${googleMap.what}"> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+
+<head>
+<title>Shop Homepage - Start Bootstrap Template</title>
+</head>
+
+<body>
+	<div class="container-fluid" layout:fragment="content">
+		<div class="product-details pb-90">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-lg-7 col-12">
+						<div class="product-details-img-content">
+							<div class="product-details-tab mr-70">
+								<div class="product-details-large tab-content">
+									<div class="tab-pane active show fade" id="pro-details1"
+										role="tabpanel">
+										<div class="easyzoom easyzoom--overlay">
+											<a th:href="@{/images/product-details/bl1.jpg}"> <img
+												th:src="@{/images/product-details/l1.jpg}" alt="">
+											</a>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="pro-details2" role="tabpanel">
+										<div class="easyzoom easyzoom--overlay">
+											<a th:href="@{/images/product-details/bl2.jpg}"> <img
+												th:src="@{/images/product-details/l2.jpg}" alt="">
+											</a>
+										</div>
+									</div>
+									<div class="tab-pane fade" id="pro-details3" role="tabpanel">
+										<div class="easyzoom easyzoom--overlay">
+											<a th:href="@{/images/product-details/bl3.jpg}"> <img
+												th:src="@{/images/product-details/l3.jpg}" alt="">
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="product-details-small nav mt-12" role=tablist>
+									<a class="active mr-12" href="#pro-details1" data-toggle="tab"
+										role="tab" aria-selected="true"> <img
+										th:src="@{/images/product-details/s1.jpg}" alt="">
+									</a> <a class="mr-12" href="#pro-details2" data-toggle="tab"
+										role="tab" aria-selected="true"> <img
+										th:src="@{/images/product-details/s2.jpg}" alt="">
+									</a> <a class="mr-12" href="#pro-details3" data-toggle="tab"
+										role="tab" aria-selected="true"> <img
+										th:src="@{/images/product-details/s3.jpg}" alt="">
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-lg-5 col-12">
+						<div class="product-details-content">
+							<h3 th:text=${product.productName}></h3>
+							<div class="rating-number">
+								<div class="quick-view-rating">
+									<i class="pe-7s-star red-star"></i> <i
+										class="pe-7s-star red-star"></i> <i class="pe-7s-star"></i> <i
+										class="pe-7s-star"></i> <i class="pe-7s-star"></i>
+								</div>
+								<div class="quick-view-number">
+									<span></span>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<div class="details-price-old">
+									<span
+										th:text="${#numbers.formatInteger(product.price,3,'POINT')+ 'đ'}"></span>
+								</div>
+								<div class="details-price-current">
+									<span
+										th:text="${#numbers.formatInteger(product.priceDiscount,3,'POINT')+ 'đ'}"></span>
+									<span class="percen_discount"
+										th:text="${'-'+product.percentageDiscount} +'%'"></span>
+								</div>
+							</div>
+							<div class="product-info-text">
+							<a th:href="${#httpServletRequest.getContextPath() + '/qrcode/' + product.productCode}"><img th:src="${#httpServletRequest.getContextPath() + '/qrcode/' + product.productCode}" class="qr-code" width="100" height="100"></a>
+								<p>
+									<span>Thương hiệu: </span><a href=""
+										th:text=${#strings.toUpperCase(product.tradeMark.description)}>HỒNG
+										KÝ</a>
+								</p>
+								<p>
+									<span>Mã sản phẩm: </span><b id="productCode"
+										th:text=${product.productCode}></b>
+								</p>
+								<p>
+									<span>Bảo hành: </span><b th:text=${product.guarantee}></b>
+								</p>
+								<p>
+									<span>Công nghệ: </span><b
+										th:text=${product.technology.description}></b>
+								</p>
+								<p>
+									<span>Trọng lượng: </span><b
+										th:text=${product.weight.description}></b>
+								</p>
+								<p>
+									<span>Tình trạng: </span><b
+										th:text=${product.status.description}></b>
+								</p>
+								<p>
+									<span th:text=${product.vat.description}></span>
+								</p>
+								<p>
+									<span>Lượt xem: </span><b th:text=${product.views}></b>
+								</p>
+								<p th:if = "${product.optionYoutube != '' && product.optionYoutube =='Y'}"><span style="" class="youtube-link" th:youtubeid="${product.youtube.youtubeId}"></span></p>
+								<p th:text=${product.description}></p>
+							</div>
+							<div class="quickview-plus-minus">
+								<div class="cart-plus-minus">
+									<input type="text" value="1" name="qtybutton"
+										id="intLimitTextBox" class="cart-plus-minus-box">
+								</div>
+								<div class="quickview-btn-cart">
+									<a class="btn-hover-black" id="addToCart"
+										href="javascript:void(0);"
+										th:attr="onclick='shoppingCart(\''+${product.productCode}+'\')'">add
+										to cart</a>
+								</div>
+							</div>
+							<div class="product-share" style=" margin-top: 20px;">
+								<ul>
+									<li class="categories-title">Share :</li>
+									<li><a th:href="${fb.link}"> <i
+											class="icofont icofont-social-facebook"></i>
+									</a></li>
+									<li><a th:href="${youtube.link}"> <i
+											class="icofont icofont-youtube-play"></i>
+									</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="product-description-review-area">
+			<div class="container-fluid">
+				<div class="product-description-review text-center">
+					<div class="description-review-title nav" role=tablist>
+						<a class="active" href="#pro-dec" data-toggle="tab" role="tab"
+							aria-selected="true">THÔNG TIN SẢN PHẨM</a> <a href="#pro-review"
+							data-toggle="tab" role="tab" aria-selected="false">
+						THÔNG SỐ KỸ THUẬT </a>
+					</div>
+					<div class="description-review-text tab-content">
+						<div class="tab-pane active show fade" id="pro-dec"
+							role="tabpanel">
+							<div class="col-lg-12" style="display: block; text-align: left;">
+								<h2 style="margin-bottom: 0.0001pt;">
+									<span style="font-family: times new roman, times, serif;"><em><span
+											style="font-size: 18px;"><strong
+												style="color: black; text-decoration: none;"><span
+													style="color: #111111;"><a
+														href="https://thietbikhangan.vn/san-pham/may-han-dien-tu-hong-ky-sr-200r-38.html"
+														style="color: black; text-decoration: none">Máy hàn
+															điện tử Hồng Ký SR 200R</a>&nbsp;</span></strong>là dòng&nbsp;<a
+												href="https://thietbikhangan.vn/san-pham/may-han-va-phu-kien-4"
+												style="color: black; text-decoration: none">máy hàn</a>&nbsp;mới
+												sản xuất vào tháng 02/02/2017 của hồng ký</span></em></span>
+								</h2>
+
+								<p>&nbsp;</p>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="pro-review" role="tabpanel">
+							<div class="col-lg-12" style="display: block;">
+								<table border="1"
+									style="width: 100%; border-collapse: collapse; border: none;">
+									<tbody>
+										<tr>
+											<td
+												style="width: 210px; border: 1pt solid rgb(221, 221, 221); background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<h2 style="margin-bottom: 15pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Hãng sản
+																xuất</strong></span></span>
+												</h2>
+											</td>
+											<td
+												style="width: 892px; border-top: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-image: initial; border-left: none; background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<h2 style="margin-bottom: 15pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">Hồng Ký</span></span>
+												</h2>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Xuất xứ</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">Việt Nam</span></span>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Bảo hành</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">12 Tháng chính hãng</span></span>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Điện áp
+																vào (V)</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">1 pha 220V ± 15%</span></span>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Công suất
+																đầu ra (KVA)</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">8.4</span></span>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Dòng điện
+																ra (A)</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">30 - 200</span></span>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Điện áp
+																ra (V)</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">65 - 75</span></span>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Hiệu suất</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">60%</span></span>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Trọng
+																lượng (Kg)</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: rgb(249, 249, 249); padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">6Kg</span></span>
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<td
+												style="width: 210px; border-right: 1pt solid rgb(221, 221, 221); border-bottom: 1pt solid rgb(221, 221, 221); border-left: 1pt solid rgb(221, 221, 221); border-image: initial; border-top: none; background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;"><strong>Sử dụng
+																que hàn (mm)</strong></span></span>
+												</p>
+											</td>
+											<td
+												style="width: 892px; border-top: none; border-left: none; border-bottom: 1pt solid rgb(221, 221, 221); border-right: 1pt solid rgb(221, 221, 221); background: white; padding: 6pt; vertical-align: top;">
+												<p style="margin-bottom: 15.0pt;">
+													<span style="font-family: times new roman, times, serif;"><span
+														style="font-size: 18px;">1.6 - 3.2</span></span>
+												</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- product area start -->
+		<div class="box-module-related-products">
+			<div
+				class="title-product-tabs group-title toolbar toolbar-related-products">
+				<ul class="tab">
+					<li class="active"><a th:href="${category.getPathUrl() + '?&category=' + category.getCategory2Id()}"><strong
+							style="font-size: initial;">Sản phẩm liên quan</strong></a></li>
+				</ul>
+				<ul class="pagination page-next-prev"
+					style="position: absolute; top: 8%; right: 1%;">
+					<li class="page-item"><a class="page-link btn-next-related"
+						href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+							<span class="sr-only">Previous</span>
+					</a></li>
+
+					<li class="page-item"><a class="page-link btn-prev-related"
+						href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+							<span class="sr-only">Next</span>
+					</a></li>
+				</ul>
+			</div>
+			<div class="owl-container">
+				<div id="owl-related" class="owl-carousel owl-theme">
+					<div class="item" th:each="prodRe : ${prodRelated}">
+						<div class="card h-100">
+							<div class="label-pro-sale">
+								<span th:text="${'giảm -'+prodRe.percentageDiscount} +'%'"></span>
+							</div>
+							<a th:href="@{/detail-page(id=${prodRe.productCode})}"><img
+								src="https://www.thegioithangnhom.com/data/bt7/thang-nhom-chu-m-tw-dai-loan-pal-b6-165.jpg" /></a>
+							<div class="card-body">
+								<h2 class="product-name">
+									<a th:href="@{/detail-page(id=${prodRe.productCode})}" th:text="${prodRe.productName}"></a>
+								</h2>
+								<h6 th:text="${#numbers.formatInteger(prodRe.priceDiscount,3,'POINT')+ 'đ'}"></h6>
+								<a class="button-small" href="javascript:void(0);" th:attr="onclick='shoppingCart(\''+${prodRe.productCode}+'\')'"><span>Mua ngay</span></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

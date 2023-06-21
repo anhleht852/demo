@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+
+<head>
+<title>Shop Homepage - Start Bootstrap Template</title>
+</head>
+
+<body>
+
+	<div class="container-fluid" layout:fragment="content">
+		<div class="shop-page-wrapper shop-page-padding">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-3 ">
+						<div class="sidebar-widget mb-45 toolbar-products-grid">
+							<h3 class="sidebar-title">Danh Mục</h3>
+							<div class="sidebar-categories">
+								<ul>
+									<li th:each="key: ${category2Product}"><a
+										th:href="${key['value'].category2.getPathUrl() + '?&category=' + key['value'].category2.getCategory2Id()}"><label
+											th:text="${key['value'].category2.getDescription()}"></label>
+											<span th:text="${key['value'].getSizeProduct()}">4</span></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="sidebar-widget mb-45 toolbar-products-grid">
+							<h3 class="sidebar-title">Thương Hiệu</h3>
+							<div class="sidebar-categories">
+								<ul>
+									<li th:each="key: ${category1Product}"><a
+										th:href="${key.getPathUrl() + '?&trading=' + key.getCategory1Id()}"><label
+											th:text="${key.getDescription()}"></label></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-9">
+						<div class="shop-product-wrapper res-xl">
+							<div class="shop-bar-area">
+								<div class="shop-bar pb-60 toolbar-products-grid">
+									<div class="shop-found-selector">
+										<div class="shop-title">
+											<h1 th:text="${titleProd}"></h1>
+										</div>
+									</div>
+									<div class="shop-filter-tab">
+										<select id="price_sort" class="form-control">
+											<option value="0">Mức giá</option>
+											<option th:each="price : ${listPrice}"
+												th:value="${price.priceCode}" th:text="${price.description}"
+												th:selected="${price.priceCode == priceSelected}"></option>
+										</select> <select id="height_sort" class="form-control">
+											<option value="0">Chiều cao</option>
+											<option th:each="height : ${listHeight}"
+												th:value="${height.heightCode}"
+												th:text="${height.description}"
+												th:selected="${height.heightCode == heightSelected}"></option>
+										</select> <select id="weight_sort" class="form-control">
+											<option value="0">Tải trọng</option>
+											<option th:each="weight : ${listWeight}"
+												th:value="${weight.weightCode}"
+												th:text="${weight.description}"
+												th:selected="${weight.weightCode == weightSelected}"></option>
+										</select>
+									</div>
+								</div>
+
+								<div class="shop-product-content tab-content">
+									<div class="row">
+										<div class="col-lg-3 col-xl-3" style="margin-bottom: 30px;"
+											th:each="product : ${productPage.content}">
+											<div class="card h-100">
+												<div class="label-pro-sale">
+													<span>giảm -12%</span>
+												</div>
+												<a href="#"><img style="width: 100%"
+													src="https://www.thegioithangnhom.com/data/bt7/thang-nhom-chu-m-tw-dai-loan-pal-b6-165.jpg" /></a>
+												<div class="card-body">
+													<h2 class="product-name">
+														<a th:text="${product.productName}"
+															th:href="@{/detail-page(id=${product.productCode})}"></a>
+													</h2>
+													<h6
+														th:text="${#numbers.formatInteger(product.priceDiscount,3,'POINT')+ 'đ'}">2.000.000đ</h6>
+													<a class="button-small"><span>Mua ngay</span></a>
+												</div>
+											</div>
+										</div>
+										<div th:if="${productPage.totalPages > 0}"
+											class="col-lg-12 pagination-style mt-10 text-center">
+											<ul>
+												<li th:if="${#numbers.formatInteger(page,0)} &gt; 1"><a
+													th:href="${'/category-product-page?&page=' + Backpage + paramURI}"><i
+														class="ti-angle-left"></i></a></li>
+												<li th:each="pageNumber : ${pageNumbers}"
+													th:class="${pageNumber==productPage.number + 1} ? active"><a
+													th:href="${'/category-product-page?&page=' + pageNumber + paramURI}"
+													th:text=${pageNumber}></a></li>
+												<li
+													th:if="${(#numbers.formatInteger(page,0) < #numbers.formatInteger(productPage.totalPages,0))}">
+													<a
+													th:href="${'/category-product-page?&page=' + Nextpage + paramURI}"><i
+														class="ti-angle-right"></i></a>
+
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div th:if="${#lists.size(productPage.content)==0}"
+										class="alert alert-warning">Không có sản phẩm nào.</div>
+								</div>
+
+								<div class="box-module-related-products"
+									th:if="${not #lists.isEmpty(prodSee)}">
+									<div
+										class="title-product-tabs group-title toolbar toolbar-related-products">
+										<ul class="tab">
+											<li class="active"><strong style="font-size: initial;">Sản
+													Phẩm Đã Xem</strong></li>
+										</ul>
+										<ul class="pagination page-next-prev"
+											style="position: absolute; top: 8%; right: 1%;">
+											<li class="page-item"><a class="page-link btn-next-see"
+												href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+													<span class="sr-only">Previous</span>
+											</a></li>
+
+											<li class="page-item"><a class="page-link btn-prev-see"
+												href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+													<span class="sr-only">Next</span>
+											</a></li>
+										</ul>
+									</div>
+									<div class="owl-container">
+										<div id="owl-see" class="owl-carousel owl-theme">
+											<div class="item" th:each="prodSe : ${prodSee}">
+												<div class="card h-100">
+													<div class="label-pro-sale">
+														<span th:text="${'giảm -'+prodSe.percentageDiscount} +'%'"></span>
+													</div>
+													<a th:href="@{/detail-page(id=${prodSe.productCode})}"><img
+														src="https://www.thegioithangnhom.com/data/bt7/thang-nhom-chu-m-tw-dai-loan-pal-b6-165.jpg" /></a>
+													<div class="card-body">
+														<h2 class="product-name">
+															<a th:href="@{/detail-page(id=${prodSe.productCode})}"
+																th:text="${prodSe.productName}"></a>
+														</h2>
+														<h6
+															th:text="${#numbers.formatInteger(prodSe.priceDiscount,3,'POINT')+ 'đ'}"></h6>
+														<a class="button-small" href="javascript:void(0);"
+															th:attr="onclick='shoppingCart(\''+${prodSe.productCode}+'\')'"><span>Mua
+																ngay</span></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
